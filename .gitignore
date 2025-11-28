@@ -1,0 +1,35 @@
+# --- データセット (サイズが大きいため除外) ---
+data/
+dataset/
+
+# --- 学習済みモデル・重みファイル (サイズが大きいため除外) ---
+saved_models/
+*.h5
+*.keras
+*.weights
+*.pth
+
+# --- ログファイル・学習履歴 ---
+logs/
+training_logs/
+*.log
+
+# --- Python キャッシュ・コンパイル済みファイル ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- 仮想環境 (誤ってアップロードしないように) ---
+venv/
+env/
+.venv/
+
+# --- OS・エディタのシステムファイル ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --- Jupyter Notebook チェックポイント ---
+.ipynb_checkpoints
