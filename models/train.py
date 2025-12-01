@@ -228,8 +228,9 @@ def main():
 
         print(f"Step 2: Fine Tuning (Unfrozen Body) for {EPOCHS_FINE} epochs...")
         base_model.trainable = True
-        for layer in base_model.layers[:FROZEN_LAYERS_COUNT]:
-            layer.trainable = False
+        for i, layer in enumerate(base_model.layers):
+            if i < FROZEN_LAYERS_COUNT or isinstance(layer, tf.keras.layers.BatchNormalization):
+                layer.trainable = False
                 
         model.compile(optimizer=Adam(learning_rate=1e-5),
                       loss='binary_crossentropy', metrics=['accuracy'])

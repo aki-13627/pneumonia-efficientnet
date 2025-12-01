@@ -87,16 +87,15 @@ def objective(trial, train_df, val_df):
                   loss='binary_crossentropy', metrics=['accuracy'])
     model.fit(train_generator, epochs=EPOCHS_HEAD, validation_data=val_generator, verbose=1)
     
-    base_model.trainable = True
+    base_model.trainable = True 
+    
     for i, layer in enumerate(base_model.layers):
-        if i < frozen_layers_count:
+        if isinstance(layer, tf.keras.layers.BatchNormalization):
+            layer.trainable = False
+        elif i < frozen_layers_count:
             layer.trainable = False
         else:
             layer.trainable = True
-
-    for layer in base_model.layers:
-        if isinstance(layer, tf.keras.layers.BatchNormalization):
-            layer.trainable = False
 
     model.compile(optimizer=Adam(learning_rate=lr_fine),
                   loss='binary_crossentropy', metrics=['accuracy'])
