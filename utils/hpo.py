@@ -113,7 +113,7 @@ def objective(trial, train_df, val_df):
         train_generator, 
         epochs=EPOCHS_FINE, 
         validation_data=val_generator,
-        verbose=1
+        verbose=2
     )
     
     
