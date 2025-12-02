@@ -142,7 +142,7 @@ if __name__ == '__main__':
     print(f"--- Optuna HPO Start (Total Epochs: {EPOCHS_HPO_TOTAL}) ---")
     
     study = optuna.create_study(direction='maximize', study_name="MobileNetV2_FineTune_HPO")
-    study.optimize(lambda trial: objective(trial, train_df, val_df), n_trials=5,n_jobs=N_JOBS, show_progress_bar=True)
+    study.optimize(lambda trial: objective(trial, train_df, val_df), n_trials=100,n_jobs=N_JOBS, show_progress_bar=True)
     
     print("\n--- HPO Results ---")
     print(f"Best trial number: {study.best_trial.number}")
