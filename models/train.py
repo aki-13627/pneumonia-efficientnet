@@ -73,7 +73,7 @@ def build_base_model():
     
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
-    x = Dropout(0.5)(x) 
+    x = Dropout(OPTIMAL_DROPOUT)(x) 
     predictions = Dense(1, activation='sigmoid')(x)
 
     model = Model(inputs=base_model.input, outputs=predictions)
@@ -243,7 +243,7 @@ def main():
         print(f"Step 1: Training Head (Frozen Body) for {EPOCHS_HEAD} epochs...")
         base_model.trainable = False
         
-        model.compile(optimizer=Adam(learning_rate=1e-3),
+        model.compile(optimizer=Adam(learning_rate=OPTIMAL_LR_HEAD),
                       loss='binary_crossentropy', metrics=['accuracy'])
         
         history1 = model.fit(train_generator, epochs=EPOCHS_HEAD, validation_data=val_generator)
@@ -251,10 +251,10 @@ def main():
         print(f"Step 2: Fine Tuning (Unfrozen Body) for {EPOCHS_FINE} epochs...")
         base_model.trainable = True
         for i, layer in enumerate(base_model.layers):
-            if i < FROZEN_LAYERS_COUNT or isinstance(layer, tf.keras.layers.BatchNormalization):
+            if i < OPTIMAL_FROZEN_LAYERS or isinstance(layer, tf.keras.layers.BatchNormalization):
                 layer.trainable = False
                 
-        model.compile(optimizer=Adam(learning_rate=1e-5),
+        model.compile(optimizer=Adam(learning_rate=OPTIMAL_LR_FINE),
                       loss='binary_crossentropy', metrics=['accuracy'])
         
         
