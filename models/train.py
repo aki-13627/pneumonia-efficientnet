@@ -138,7 +138,7 @@ def plot_all_folds_comparison(acc_list, loss_list):
 
 def evaluate_fold(model, val_generator, fold_no):
     y_true = val_generator.classes
-    predictions = model.predict(val_generator, verbose=0)
+    predictions = model.predict(val_generator, verbose=2)
     y_score = predictions.ravel()
     y_pred = (y_score > 0.5).astype(int)
 
@@ -246,7 +246,7 @@ def main():
         model.compile(optimizer=Adam(learning_rate=OPTIMAL_LR_HEAD),
                       loss='binary_crossentropy', metrics=['accuracy'])
         
-        history1 = model.fit(train_generator, epochs=EPOCHS_HEAD, validation_data=val_generator)
+        history1 = model.fit(train_generator, epochs=EPOCHS_HEAD, validation_data=val_generator, verbose=2)
 
         print(f"Step 2: Fine Tuning (Unfrozen Body) for {EPOCHS_FINE} epochs...")
         base_model.trainable = True
@@ -262,6 +262,7 @@ def main():
             train_generator, 
             epochs=EPOCHS_FINE, 
             validation_data=val_generator,
+            verbose=2
         )
         
         plot_history(history1, history2, fold_no)
