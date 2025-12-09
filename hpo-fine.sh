@@ -31,17 +31,17 @@ pip install -r requirements.txt
 echo "--- 4. Verifying TensorFlow GPU access (Optional) ---"
 ./venv_gpu/bin/python3 -c "import tensorflow as tf; print('TensorFlow version:', tf.__version__); print('GPU devices:', tf.config.list_physical_devices('GPU'))"
 
-# --- 5. 学習の開始 ---
-echo "--- 5. Starting MobileNetV2 Training in Background ---"
+# --- 5. HPO-FINEプロセスの開始 ---
+echo "--- 5. Starting MobileNetV2 HPO-FINE Training in Background ---"
 
 # 現在時刻を取得し、ファイル名に組み込む
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-LOG_FILE="training_output_${TIMESTAMP}.log"
+LOG_FILE="hpo_fine_output_${TIMESTAMP}.log"
 
 # nohupを使ってバックグラウンドで実行し、出力をログファイルにリダイレクト
-nohup ./venv_gpu/bin/python3 models/train.py > $LOG_FILE 2>&1 &
+nohup ./venv_gpu/bin/python3 utils/hpo-fine.py > $LOG_FILE 2>&1 &
 
-echo "学習をバックグラウンドで開始しました。"
+echo "HPO-FINEプロセスをバックグラウンドで開始しました。"
 echo "ログファイル名: $LOG_FILE"
 echo "進捗確認は 'tail -f $LOG_FILE' で行ってください。"
 echo "PID: $!"
