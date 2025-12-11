@@ -3,8 +3,7 @@
 ## ディレクトリ構成
 
 ```text
-pneumonia-detection
-/
+pneumonia-detection/
 ├── data/
 │   ├── human/
 │   │   ├── normal/
