@@ -34,4 +34,6 @@ Thumbs.db
 # --- Jupyter Notebook チェックポイント ---
 .ipynb_checkpoints
 
-key/
+key/*
+
+scripts/*

@@ -5,12 +5,11 @@ from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ================= 設定 =================
 MODEL_PATH = './saved_models/mobilenetv2_fold2.keras'
 TEST_DIR = './data/test'
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
-# =======================================
+
 
 
 def apply_clahe(image):
@@ -66,7 +65,6 @@ def evaluate():
     
     test_ds = test_ds.map(preprocess_wrapper, num_parallel_calls=tf.data.AUTOTUNE)
 
-    # 3. バッチ化 (モデルに入力するため)
     test_ds = test_ds.batch(BATCH_SIZE).prefetch(tf.data.AUTOTUNE)
 
     print("Predicting...")
@@ -77,10 +75,8 @@ def evaluate():
     else:
         y_pred = np.argmax(predictions, axis=1)
 
-    # 正解ラベルの取得 (バッチ化されたデータセットから結合して取得)
     y_true = np.concatenate([y for x, y in test_ds], axis=0)
 
-    # ================= 評価結果 =================
     print("\n" + "="*30)
     print("       EVALUATION REPORT")
     print("="*30)

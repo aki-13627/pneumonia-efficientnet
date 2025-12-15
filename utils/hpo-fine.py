@@ -18,12 +18,11 @@ BATCH_SIZE = 16
 NUM_FOLDS = 5
 DATA_DIR = './data/human'
 
-# --- 固定パラメータ ---
 EPOCHS_HEAD = 10
 OPTIMAL_LR_HEAD = 0.006886023869360358
 OPTIMAL_DROPOUT = 0.3796178577283182
 OPTIMAL_FROZEN_LAYERS = 66
-# =======================================
+
 
 def set_gpu_config():
     gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -59,23 +58,20 @@ val_datagen = ImageDataGenerator(
 def extract_patient_id(filename):
     name_body = os.path.splitext(filename)[0]
     
-    # NORMAL2-IM-1427-0001.jpeg -> patient_1427
     if name_body.startswith("NORMAL2"):
         parts = name_body.split("-")
         if len(parts) >= 3:
             return f"patient_{parts[2]}"
             
-    # IM-0115-0001.jpeg -> patient_0115
     elif name_body.startswith("IM"):
         parts = name_body.split("-")
         if len(parts) >= 2:
             return f"patient_{parts[1]}"
             
-    # person1946_bacteria_4874.jpeg -> patient_person1946
     if "person" in name_body:
         return name_body.split("_")[0] 
 
-    # 該当しない場合はファイル名自体をIDとする（安全策）
+    
     return name_body
 
 def build_fixed_model():

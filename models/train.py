@@ -112,7 +112,6 @@ def plot_history(history1, history2, fold_no):
     plt.close()
 
 def plot_all_folds_comparison(acc_list, loss_list):
-    """全Foldの比較グラフ"""
     plt.figure(figsize=(14, 6))
 
     plt.subplot(1, 2, 1)
@@ -236,10 +235,9 @@ def main():
             batch_size=BATCH_SIZE, class_mode='binary', shuffle=False
         )
         
-        # 1. モデル構築
         model, base_model = build_base_model()
 
-        # === STEP 1: ヘッドのみ学習 (転移学習) ===
+        
         print(f"Step 1: Training Head (Frozen Body) for {EPOCHS_HEAD} epochs...")
         base_model.trainable = False
         
