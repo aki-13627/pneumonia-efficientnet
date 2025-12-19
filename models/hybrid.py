@@ -279,10 +279,10 @@ def main():
         
         scheduler = optim.lr_scheduler.OneCycleLR(
             optimizer, 
-            max_lr=1e-4, 
+            max_lr=1e-5,
             steps_per_epoch=steps_per_epoch, 
             epochs=EPOCHS
-        )
+        )           
         
         
         history = {'train_loss': [], 'train_acc': [], 'val_loss': [], 'val_acc': []}
